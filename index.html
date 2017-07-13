@@ -1,0 +1,74 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<title>DEMO</title>
+<script language="Javascript">
+function createXMLHttpRequest() {
+	var xmlHttp;
+	if (window.XMLHttpRequest) {
+		xmlHttp = new XMLHttpRequest();
+		if (xmlHttp.overrideMimeType)
+			xmlHttp.overrideMimeType('text/xml');
+	} else if (window.ActiveXObject) {
+		try {
+			xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+		} catch (e) {
+			try {
+				xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+			} catch (e) {
+			}
+		}
+	}
+	return xmlHttp;
+}
+function submitContent(){
+    var url = "/segment";
+	var content = document.getElementById('content').value;
+	xmlHttp = createXMLHttpRequest(); 
+    xmlHttp.open("POST", url, true);
+	xmlHttp.setRequestHeader("Content-Type", "application/plain;");
+    xmlHttp.onreadystatechange = function(){
+		if(xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+			var result = document.getElementById('result');
+			result.value = xmlHttp.responseText;
+			//alert(xmlHttp.responseText);
+		}
+	}
+    
+    xmlHttp.send(content);
+}
+
+</script>
+</head>
+
+<body>
+
+
+<table align="center">
+<tbody>
+<!--<form id="form1" name="form1" method="post" action="" onsubmit="return submitContent();" target="_blank">-->
+<tr>
+<td>
+句子:
+</td>
+<td><textarea id="content" cols="80" rows="17">
+欢喜
+
+</textarea></td></tr>
+<tr><td></td><td><p align="center"><input type="submit" value="点击提交" onclick="submitContent();"></td></tr>
+<tr><td></td><td></td></tr>
+
+<tr>
+<td>
+推荐的元动作：
+</td>
+<td><textarea id="result" cols="130" rows="34" readonly="yes"></textarea></td></tr>
+
+</tbody></table>
+</form>
+
+
+
+
+</body></html>
